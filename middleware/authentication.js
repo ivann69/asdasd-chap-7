@@ -19,7 +19,7 @@ module.exports = async (req, res, next) => {
       req.user = decodedData
       next()
     } else {
-      return res.status(404).json({ message: "Tokennya gk ada bos" })
+      return res.status(404).json({ message: "NO TOKEN" })
     }
   } catch (error) {
     console.log(error)

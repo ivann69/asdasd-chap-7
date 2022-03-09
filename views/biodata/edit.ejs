@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>editform</title>
+  </head>
+  <body>
+    <h2>edit dulu~</h2>
+    <form action="/biodata/<%= data.id %>/edit" method="POST">
+      Name: <br />
+      <input type="text" , name="name" value="<%=data.name%>" /><br />
+      gender: <br />
+      <input type="text" , name="gender" value="<%=data.gender%>" /><br />
+      <!-- gender:<br /> -->
+      <!-- <input type="text" , name="gender" value="<%=data.dob%>" /><br />
+      <br /> -->
+      Birth date:<br />
+      <input name="dob" type="date" /><br />
+      status:<br />
+      <input type="text" , name="status" value="<%=data.status%>" /><br />
+      <br />
+      <input type="submit" /><br />
+    </form>
+  </body>
+</html>

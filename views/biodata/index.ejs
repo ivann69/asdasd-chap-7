@@ -33,23 +33,21 @@
           <th style="border: 1px solid black">ID</th>
           <th style="border: 1px solid black">Name</th>
           <th style="border: 1px solid black">Gender</th>
-          <th style="border: 1px solid black">DoB</th>
+          <th style="border: 1px solid black">Birthday</th>
           <th style="border: 1px solid black">Status</th>
-          <!-- <th style="border: 1px solid black">Birth Date</th>
-          <th style="border: 1px solid black"></th> -->
+          <th style="border: 1px solid black"></th>
         </tr>
-        <% for (let i = 0; i < userBiodata.length; i++){ %>
+        <% for (let i = 0; i < data.length; i++){ %>
         <tr style="border: 1px solid black">
-          <td style="border: 1px solid black"><%= userBiodata[i].id %></td>
-          <!-- <td style="border: 1px solid black"><%= userBiodata[i].name %></td> -->
-          <!-- <td style="border: 1px solid black"><%= data[i].last_name %></td>
-          <td style="border: 1px solid black"><%= data[i].email %></td>
+          <td style="border: 1px solid black"><%= data[i].id %></td>
+          <td style="border: 1px solid black"><%= data[i].name %></td>
           <td style="border: 1px solid black"><%= data[i].gender %></td>
-          <td style="border: 1px solid black"><%= data[i].birthday %></td>
-          <td> -->
+          <td style="border: 1px solid black"><%= data[i].dob %></td>
+          <td style="border: 1px solid black"><%= data[i].status %></td>
+          <td>
             <a href="/biodata/<%=data[i].id%>/edit">Edit</a> |
             <a href="/biodata/<%= data[i].id%>/delete">Delete</a>
-          </td> -->
+          </td>
         </tr>
         <% } %>
       </table>

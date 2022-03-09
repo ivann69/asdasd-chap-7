@@ -1,37 +1,110 @@
 const { UserHistory } = require('../models')
 
 class HistoryController {
-  static getHistory = async (req, res, next) => {
-    // ambil userid dari cookies
-    const { UserId } = req.cookies
-
-    // ambil dari req.user yang diselipin dari authentikasi
-    const userIdDariReqUser = req.user.id
-
-    try {
-      const userHistory = await UserHistory.findOne({
+    static viewAll(req, res) {
+      UserHistory.findAll({
+        order: [["id", 'ASC']]
+      })
+        .then((data) => {
+          res.render("history", { data })
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
+  
+    static viewById(req, res) {
+      const id = req.params.id
+      UserHistory.findByPk(id)
+        .then((data) => {
+          // karena di ejs untuk menampilkan datanya data wajib berupa array, karena nampilin datanya itu prosesnya nge loop data, maka dari itu datanya dibuat menjadi arrray
+          data = [data]
+          res.render("history", { data })
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
+  
+    static viewByMenang(req, res) {
+      const menang = req.params.menang
+      UserHistory.findOne({
+        where: { menang: menang }
+      })
+        .then((data) => {
+          data = [data]
+          res.render("history", { data })
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
+  
+    static getAddForm(req, res) {
+      res.render("history/add")
+    }
+  
+    static addHistory(req, res) {
+      // bikin penampung object buat input data ke db
+      let newhistory = {
+        win: req.body.win,
+        lose: req.body.lose,
+        draw: req.body.draw,
+      }
+  
+      UserHistory.create(newhistory)
+        .then((_) => {
+          res.redirect("/history")
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
+  
+    static getEditForm(req, res) {
+      const id = req.params.id
+      UserHistory.findByPk(id)
+        .then((data) => {
+          console.log(data)
+          res.render('history/edit', { data })
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
+  
+    static edithistory(req, res) {
+      const id = req.params.id
+      let updatedhistory = {
+        win: req.body.win,
+        lose: req.body.lose,
+        draw: req.body.draw,
+      }
+      UserHistory.update(updatedhistory, {
         where: {
-          UserId: userIdDariReqUser
+          id: id
         }
       })
-      res.status(200).json({ userHistory })
-    } catch (error) {
-      res.status(500).json(error)
+        .then(() => {
+          res.redirect("/history")
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     }
-  }
-
-  static getHistoryById = async (req, res, next) => {
-    try {
-      const userHistory = await UserHistory.findByPk({
-        where: {
-          id: req.params.id
-        }
+  
+    static deletehistory(req, res) {
+      const id = req.params.id
+      UserHistory.destroy({
+        where: { id: id }
       })
-      res.status(200).json({ userHistory })
-    } catch (error) {
-      res.status(500).json(error)
+        .then(() => {
+          res.redirect("/history")
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     }
   }
-}
-
-module.exports = { HistoryController }
+  
+  module.exports = { HistoryController }
